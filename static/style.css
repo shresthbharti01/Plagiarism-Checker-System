@@ -1,0 +1,168 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(135deg, #1d2671, #c33764);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Card */
+.card {
+    width: 820px;
+    padding: 50px;
+    background: rgba(20, 20, 40, 0.85);
+    backdrop-filter: blur(20px);
+    border-radius: 22px;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+    text-align: center;
+    color: #f9fafb;
+}
+
+/* Heading */
+h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.tagline {
+    font-size: 14px;
+    opacity: 0.7;
+    margin-bottom: 30px;
+}
+
+/* Textarea */
+textarea {
+    width: 100%;
+    height: 360px;
+    border-radius: 16px;
+    border: none;
+    padding: 20px;
+    font-size: 14px;
+    resize: none;
+    outline: none;
+    background: #0f172a;
+    color: #ffffff;
+    margin-bottom: 15px;
+    transition: 0.3s ease;
+}
+
+/* File Upload */
+.file-wrapper {
+    margin-bottom: 20px;
+    transition: 0.4s ease;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.file-wrapper label {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #334155;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.file-wrapper.active label {
+    background: linear-gradient(90deg, #06b6d4, #3b82f6);
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(59,130,246,0.4);
+}
+
+.file-name {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #facc15;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Buttons */
+.button-group {
+    display: flex;
+    gap: 15px;
+}
+
+button {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.analyze-btn {
+    background: linear-gradient(90deg, #06b6d4, #3b82f6);
+    color: white;
+}
+
+.analyze-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(59, 130, 246, 0.5);
+}
+
+.clear-btn {
+    background: linear-gradient(90deg, #ef4444, #dc2626);
+    color: white;
+}
+
+.clear-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(239, 68, 68, 0.5);
+}
+
+/* Progress Circle */
+.progress-wrapper {
+    position: relative;
+    margin: 40px auto;
+    width: 150px;
+    height: 150px;
+}
+
+.progress-ring-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 14;
+}
+
+.progress-ring-fill {
+    fill: none;
+    stroke: #06b6d4;
+    stroke-width: 14;
+    stroke-linecap: round;
+    stroke-dasharray: 377;
+    stroke-dashoffset: 377;
+    transition: stroke-dashoffset 1s ease;
+}
+
+.percentage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 28px;
+    font-weight: 600;
+}
+
+/* Result */
+.result {
+    margin-top: 20px;
+    font-size: 15px;
+    opacity: 0.9;
+}

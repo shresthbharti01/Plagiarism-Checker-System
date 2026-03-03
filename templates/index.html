@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plagiarism Checker</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="card">
+    <h1>Plagiarism Checker</h1>
+    <p class="tagline">Upload PDF / Word file or paste text to detect similarity</p>
+
+    <form id="uploadForm">
+        <textarea name="text" id="userText"
+        placeholder="Paste your document text here..."></textarea>
+
+        <div class="file-wrapper" id="fileWrapper">
+            <input type="file" name="file" id="fileInput"
+            accept=".pdf,.docx">
+            <label for="fileInput" id="fileLabel">
+                📄 Choose PDF or Word File
+            </label>
+            <div class="file-name" id="fileName"></div>
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="analyze-btn">Analyze</button>
+            <button type="button" class="clear-btn" onclick="clearAll()">Clear</button>
+        </div>
+    </form>
+
+    <div class="progress-wrapper">
+        <svg width="150" height="150">
+            <circle class="progress-ring-bg"
+                    cx="75" cy="75" r="60"/>
+            <circle class="progress-ring-fill"
+                    cx="75" cy="75" r="60"/>
+        </svg>
+        <div class="percentage" id="percentageText">0%</div>
+    </div>
+
+    <div class="result" id="resultText"></div>
+</div>
+
+<script>
+
+// Animate Progress
+function animateProgress(percent) {
+    const circle = document.querySelector(".progress-ring-fill");
+    const radius = 60;
+    const circumference = 2 * Math.PI * radius;
+
+    circle.style.strokeDasharray = circumference;
+    circle.style.strokeDashoffset = circumference - (percent / 100) * circumference;
+
+    const percentageText = document.getElementById("percentageText");
+    percentageText.innerText = percent + "%";
+}
+
+// Handle File Selection
+const fileInput = document.getElementById("fileInput");
+const fileName = document.getElementById("fileName");
+const fileWrapper = document.getElementById("fileWrapper");
+const textarea = document.getElementById("userText");
+
+fileInput.addEventListener("change", function() {
+    if (this.files.length > 0) {
+        const selectedFile = this.files[0].name;
+
+        fileName.innerText = "Selected: " + selectedFile;
+        fileWrapper.classList.add("active");
+
+        textarea.disabled = true;
+        textarea.style.opacity = "0.6";
+    }
+});
+
+// Submit Form
+document.getElementById("uploadForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    let formData = new FormData(this);
+
+    fetch("/check", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        animateProgress(data.similarity_percentage);
+        document.getElementById("resultText").innerText =
+            "Matched File: " + data.matched_file;
+    });
+});
+
+// Clear Everything
+function clearAll() {
+    document.getElementById("userText").value = "";
+    document.getElementById("fileInput").value = "";
+    document.getElementById("resultText").innerText = "";
+    document.getElementById("fileName").innerText = "";
+    fileWrapper.classList.remove("active");
+    textarea.disabled = false;
+    textarea.style.opacity = "1";
+    animateProgress(0);
+}
+
+</script>
+
+</body>
+</html>
